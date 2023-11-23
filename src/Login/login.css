@@ -1,0 +1,229 @@
+
+
+.background-overlay{
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+    max-width: 100vw;
+    height: 100vh;
+    background-image: url('/login-bg.jpg');
+    background-size: cover;
+    object-fit: cover;
+}
+
+.background-overlay::after {
+    content: ''; 
+    position: absolute; 
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.navbar{
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(to bottom , black , transparent ) ;
+    display: flex;
+    justify-content: space-between;
+    gap: 2vmax;
+}
+
+.netflix-login-logo{
+    width: 9.75rem;
+    height: 3rem;
+    padding: 2vmax;
+    padding-top: 1.7vmax;
+    margin-left: 9.9vmax;
+}
+
+.sign-in{
+    background-color: red !important;
+    color: white !important ;
+    padding: 0vmax 0vmax !important ;
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    font-weight: 500 !important ;
+    /* font-size: 1vmax !important ; */
+}
+
+.navbar-element{
+    margin: 2vmax;
+    margin-right: 14vmax;
+    display: flex;
+    flex-direction: row !important ;
+
+}
+
+.select-btn{
+    margin-right: 2vmax;
+    background-color: transparent;
+    color: white;
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    padding: 0.3vmax 1.5vmax ;
+    border-radius: 0.3vmax;
+    /* padding-right: .3vmax; */
+    /* padding-right: 2.25rem; */
+    line-height: 1.25rem;
+
+}
+
+.select-btn > option {
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    
+}
+
+.body-content{
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.body-content > div {
+    max-width: 95vmax;
+    margin: auto;
+    margin-top: 2vmax;
+    padding: 0 2vmax;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.body-content > div:first-child {
+    margin-top: 10vmax;
+}
+
+.body-h1-login{
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    font-weight: 800 !important ;
+    text-align: center;
+    font-size: 3.8vmax !important ;
+}
+
+.body-h3-login{
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    text-align: center;
+    font-size: 1.8vmax  !important ;
+}
+.body-h4-login{
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    text-align: center;
+    font-size: 1.4vmax  !important ;
+    font-weight: 500  !important  ;
+}
+
+.login-div{
+    display: flex;
+    flex-direction: row !important ;
+    place-items: center;
+    margin: auto;
+    justify-content: center;
+}
+
+
+.login-div >  input{
+    background-color: transparent !important ;
+    border: 1px solid rgba(255, 255, 255, 0.452);
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    color: rgb(214, 214, 214);
+    padding: 1.2vmax 4vmax ;
+    font-size: 1.4vmax;
+    color: white;
+}
+
+.login-div >  input:focus {
+    outline: 1px solid #ffffff; /* Change the color to your desired outline color */
+  }
+
+.login-div > button {
+    color: white !important ;
+    background-color: red !important;
+    /* padding: 1.3vmax 4.4vmax ; */
+    
+}
+.go1579819456{
+    position: relative;
+    overflow-y: hidden !important;
+}
+
+@media screen and (max-width:900px)  {
+    .body-content > div:first-child {
+        margin-top: 25vmax;
+
+    }
+    .body-content > div:nth-child(4) {
+        margin-top: 5vmax;
+    }
+    .body-h3-login {
+        font-size: 2vmax !important ;
+    }
+    .body-h4-login {
+        font-size: 2vmax !important ;
+    }
+}
+
+@media screen and (max-width:768px)  {
+    .body-content > div:first-child {
+        width: 65vmax;
+        margin-top: 19vmax;
+        
+    }
+
+    .body-h1-login{
+        font-size: 3vmax !important ;
+    }
+
+    .body-content > div:nth-child(3) {
+        margin-top: 2vmax;
+
+    }
+   .body-content > div:nth-child(4) {
+        margin-top: 5vmax;
+    }
+    .body-h3-login {
+        font-size: 2vmax !important ;
+    }
+    .body-h4-login {
+        font-size: 2vmax !important ;
+    }
+    .login-div > input {
+        padding: 1.8vmax 5vmax ;
+
+    }
+    .netflix-login-logo{
+        width: 8rem;
+        height: 3rem;
+        margin-left: 9vmax;
+    }
+    .login-div{
+        flex-direction: column !important ;
+        gap: 2vmax;
+    }
+
+    .navbar-element{
+        margin-right: 8vmax;
+    }
+}
+
+
+@media screen and (max-width:610px) {
+    .body-content > div:first-child{
+        max-width: 45vmax;
+    }
+    .navbar-element{
+        margin-right: 2vmax;
+    }
+    .netflix-login-logo{
+        margin-left: 1vmax;
+    }
+}
+@media screen and (max-width:450px) {
+    .body-content > div:first-child{
+        max-width: 40vmax;
+    }
+    .navbar-element{
+        margin-right: 0;
+    }
+    .netflix-login-logo{
+        margin-left: 0;
+    }
+}

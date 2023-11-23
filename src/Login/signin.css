@@ -1,0 +1,135 @@
+
+
+.background-overlay-signin{
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+    max-width: 100vw;
+    height: 100vh;
+    background-image: url('/login-bg.jpg');
+    background-size: cover;
+    object-fit: cover;
+}
+
+.background-overlay-signin::after {
+    content: '';
+    position: absolute; 
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.navbar-signup{
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(to bottom , black , transparent ) ;
+    display: flex;
+    justify-content: space-between;
+    gap: 2vmax;
+}
+
+.netflix-login-logo{
+    width: 10rem;
+    height: 3rem;
+    padding: 2vmax;
+    padding-top: 1.7vmax;
+    margin-left: 2vmax;
+}
+
+.signin-container{   
+    display: flex;
+    height: 100vh;
+    min-width: 45vmax;
+    position: relative;
+    justify-content: center;
+    flex-direction: column;
+    margin: 2.3vmax auto;
+    padding: 2vmax 0;
+    padding-bottom: 2vmax;
+    margin-bottom: 8vmax;
+    z-index: 1;
+    width: 40vw;
+    background-color: rgba(0, 0, 0, 0.747);
+    color: white;
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+
+}
+
+.sign-in-text{
+    font-size: 2.3vmax !important ;
+    font-weight: 500 !important ;
+
+}
+.signin-container > div:first-child {    
+    text-align: left;
+    padding-left: 10.7vmax;
+    margin: 2vmax 0 ;
+}
+
+.signin-container > div {    
+    text-align: center;
+}
+.signin-container > div:nth-child(2) > input , .signin-container > div:nth-child(3) > input {    
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    padding: 1.4vmax 2vmax;
+    padding-right: 8vmax;
+    margin: 0.5vmax;
+    background-color: rgb(51, 51, 51);
+    color:#8c8c8c;
+    border: none;
+    font-size: 1.3vmax;
+    border-radius: 0.6vmax;
+}
+
+.sign-btn-signin{
+    background-color: red !important ;
+    padding: 1.4vmax 10vmax !important ;
+    border-radius: 0.6vmax !important ;
+    color: white !important ;
+    font-size: 1.3vmax !important ;
+    margin-top: 2.8vmax !important ;
+}
+
+.new-to-netflix-box{
+    margin-top: 4.3vmax;
+    padding-right: 8vmax;
+    font-size: 1.3vmax;
+    color: #8c8c8c;
+    margin-bottom: 8vmax;
+
+}
+
+
+.sign-up-text{
+    color: #ffffff !important ;
+    font-weight: 500 ;
+}
+
+
+@media screen and (max-width:1350px) {
+    .signin-container{ 
+        height: 60vh;
+        min-width: 45vmax;
+    }
+    .signin-container > div:first-child {   
+        padding-left: 10.7vmax;
+    }
+}
+@media screen and (max-width:850px) {
+    .signin-container{ 
+        height: 60vh;
+        min-width: 45vmax;
+    }
+    .signin-container > div:first-child {   
+        padding-left: 10.7vmax;
+    }
+}
+@media screen and (max-width:450px) {
+    .signin-container{ 
+        height: 60vh;
+        min-width: 30vmax;
+    }
+    .signin-container > div:first-child {   
+        padding-left: 3vmax;
+    }
+}
