@@ -8,11 +8,11 @@ import Loader from '../loader/loader'
 import { LoadUser, userAction } from '../actions/userAction'
 import { CLEAR_ERRORS } from '../constants/user'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
-const Login = ({history}) => {
+const Login = ({}) => {
     const { error,isAuthenticated, user, loading} = useSelector((state)=>state.userLogin)
-    const {isAuthenticated:loaduser, loading:loaduserload} = useSelector((state)=>state.loadUser)
+    const {isAuthenticated:loaduser, loading:loaduserload} = useSelector((state)=>state.User)
     const dispatch = useDispatch()
     let navigate = useNavigate();
 
@@ -47,30 +47,31 @@ const Login = ({history}) => {
             })
         }
 
-        if(loaduserload===false){
-            loaduser ? navigate('/browse') : {}
-          }
+        // if(loaduserload===false){
+        //     loaduser ? navigate('/browse') : {}
+        //   }
 
-        if(loading===false){
-            isAuthenticated ? navigate('/browse') : {}
-          }
+        // if(loading===false){
+        //     isAuthenticated ? navigate('/browse') : {}
+        //   }
       
         
 
-        if(isAuthenticated){
+        if(isAuthenticated===true){
             toast.success("Logged In Successfully")
             navigate('/browse')
-            // dispatch(LoadUser())
+
+            dispatch(LoadUser())
 
         }
 
-    },[dispatch ,isAuthenticated, error, history , loaduser ,loaduserload ])
+    },[dispatch ,isAuthenticated, error, navigate , loaduser ,loaduserload ])
 
   return (
    <Fragment>
     {
         loading && 
-        loading ? 
+        loading===true ? 
     <Loader/> : (
         <div className='background-overlay-signin' >
     <div className='login-container' >

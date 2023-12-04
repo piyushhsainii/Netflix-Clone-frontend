@@ -1,12 +1,17 @@
 .navbar-browse{
-    position: relative;
-    z-index: 1;
-    background: linear-gradient(to bottom , rgba(0, 0, 0, 0.458) , transparent ) ;
+    position: fixed;
+    z-index: 12;
+    background: linear-gradient(to bottom , rgba(0, 0, 0, 0.758) , transparent ) ;
     display: flex;
     justify-content: space-between;
     gap: 2vmax;
+    top: 0;
+    height: 5.5vmax;
+    width: 100vw;
 }
-
+.addgradient{
+    background-color: black;
+}
 
 .netflix-login-logo-browse{
     width: 7.2rem;
@@ -28,6 +33,7 @@
     color: white;
     font-weight: 400;
     font-size: 1.1vmax;
+    z-index: 20;
 }
 
 .navbar-element-browse{
@@ -88,6 +94,7 @@
       top: 50%;
       transform: translateY(-50%);
       position: absolute;
+
     }
   
     .notification-logo{
@@ -102,6 +109,7 @@
         padding-left: 0.3vmax;
         padding-bottom: 0.4vmax;
         cursor: pointer;
+
     }
   
     .last-navbar-component:hover{
@@ -118,13 +126,14 @@
 
 .floating-box-navbar{
     display: none;
-    position: absolute;
+    position: fixed;
     right: 5vmax;
     top: 5vmax;
     border: 1px solid black;
     transition: 0.4s all;
     background-color: rgb(41, 41, 41);
     padding: 1vmax;
+    z-index: 13;
     /* padding-top: 8vmax; */
 }
 
@@ -139,7 +148,8 @@
 
 .floating-box-navbar > ul > li {
     background-color: rgb(41, 41, 41);
-    color: white;
+    color: rgba(0, 0, 0, 0);
+    text-decoration: none;
     font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
 
 }   
@@ -167,5 +177,14 @@
 .signout-box{
     margin-top: 5px;
     text-align: center;
-    padding-left: 4.4vmax;
+}
+
+.signout-text{
+    text-align: center !important ;
+    padding-left: 4.5vmax !important ;
+}
+
+.navbar-links{
+    text-decoration: none;
+    color: white;
 }

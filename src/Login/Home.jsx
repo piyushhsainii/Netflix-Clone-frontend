@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect } from 'react'
 import { Button, Typography } from '@material-ui/core'
-import "./login.css"
-import { Link, useNavigate } from 'react-router-dom';
+import "./home.css"
+import { Link, useNavigate } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
 const Home = () => {
 
-  const {isAuthenticated, loading} = useSelector((state)=>state.loadUser)
+  const {isAuthenticated, loading} = useSelector((state)=>state.User)
   const navigate = useNavigate()
 
   useEffect(()=>{

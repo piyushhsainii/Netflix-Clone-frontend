@@ -1,6 +1,7 @@
 
 
 .background-overlay{
+    overflow-x: hidden;
     font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
     max-width: 100vw;
     height: 100vh;
@@ -225,5 +226,15 @@
     }
     .netflix-login-logo{
         margin-left: 0;
+    }
+    .netflix-login-logo{
+        width: 7rem;
+        height: 2.7rem;
+    }
+    .select-btn{
+        font-size: 1.7vmax;
+    }
+    .sign-in{
+        font-size: 1.7vmax;
     }
 }

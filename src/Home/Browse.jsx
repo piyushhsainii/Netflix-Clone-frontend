@@ -1,16 +1,25 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import "./browse.css"
 import toast from 'react-hot-toast'
+import List from './List';
+import   getListAction  from '../actions/listAction'
+import Loader from '../loader/Loader'
+import Featuredshow from './featuredshow';
+import { LoadUser, signOutUser } from '../actions/userAction'
 
 const Home = () => {
 
-  const { isAuthenticated, loading } = useSelector((state) => state.loadUser)
+  const { isAuthenticated, loading , user } = useSelector((state) => state.User)
+  const { list , loading:listloading } = useSelector((state)=>state.List)
+
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [image, setImage] = useState('./red.png')
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [open, setopen] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
 
   const searchRef = useRef(null);
   const NavRef = useRef(null);
@@ -19,16 +28,19 @@ const Home = () => {
     setIsInputVisible((prev) => !prev);
   };
 
+  const signoutHandler = ()=>{
+    dispatch(signOutUser())
+  }
+
   const handleDocumentClick = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
       setIsInputVisible(false);
     }
   };
 
-  
   const [isHovered, setIsHovered] = useState(false);
   
-  const togglestate = () => {
+  const togglestate = () => { 
     setIsHovered((prev)=>!prev);
   };
 
@@ -38,34 +50,60 @@ const Home = () => {
     }
   };
 
+  const type = 'Movie Series'
 
 
   useEffect(() => {
+  dispatch(getListAction(type))
+    // dispatch(getListAction({genre:'horror'}))
+
     if (loading === false) {
       isAuthenticated ? navigate('/browse') : navigate('/')
     }
+  
+    
     document.addEventListener('click', handleDocumentClick);
     document.addEventListener('click', handleNavClick);
+
+    const handleScroll = () => {
+      const scrollThreshold = 175;
+      
+      if (window.scrollY > scrollThreshold) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    // Add event listener for the scroll event
+    window.addEventListener('scroll', handleScroll);
 
 
     return () => {
       document.removeEventListener('click', handleDocumentClick);
       document.removeEventListener('click', handleNavClick);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [isAuthenticated, loading])
+    
 
+  }, [isAuthenticated, loading , dispatch    ])
+  console.log(user)
   return (
     <Fragment>
-      <div className='navbar-browse'
-             >
+      {
+        loading ? 
+        <Loader/> : 
+          
+          <Fragment>
+            <div className={`navbar-browse ${scrolled ? 'addgradient' : ''}  `}
+      >
         <div className='navbar-bar-buttons' >
           <div>
             <img src="netflix-logo-0.png" alt="" className='netflix-login-logo-browse' />
           </div>
-          <div>Home</div>
-          <div>Tv Shows</div>
-          <div>Movies</div>
-          <div>My List</div>
+          <div> <Link to='/browse' className='navbar-links' > Home</Link></div>
+          <div> <Link to='/tvshows' className='navbar-links' > Tv Shows</Link></div>
+          <div> <Link to='/movies' className='navbar-links' > Movies</Link></div>
+          <div> <Link to='/mylist' className='navbar-links' > My List</Link></div>
         </div>
 
         <div className='navbar-element-browse' >
@@ -83,51 +121,79 @@ const Home = () => {
           <div>
             <img
               className='notification-logo'
-              src='notification.png'
+              src='notification2.png'
               onClick={()=>{
                 toast.success('Nothing to show yet')
               }}
-            ></img>
+              ></img>
           </div>
 
           <div className='last-navbar-component' 
            ref={NavRef}
-          >
+           >
             <img
               className='notification-logo'
               src='red.png'
               onClick={togglestate}
               ref={NavRef}
-            ></img>
+              ></img>
             <img
               className='notification-logo2'
-              src="/down.png" alt=""
+              src="/down2.png" alt=""
               onClick={togglestate}
               ref={NavRef}
               />
           </div>
         </div>
       </div>
-        {/* floating div */}
+         {/* floating div */}
               <div
-               className={`floating-box-navbar ${isHovered ? 'hovered': ''}  `} 
-               >
+              className={`floating-box-navbar ${isHovered ? 'hovered': ''}  `} 
+              >
                 <ul              
                 >                 
                   <li> <Link
                   to='/Profile'
                   >
                    <img src="./red.png" style={{width:"1.44vmax", paddingTop:"2px"}} alt="" />
-                  Profile 2
+                  { user?.name }
                   </Link> </li>
                   <li> <Link> <img src="./edit.png" style={{width:"1.5vmax", paddingTop:"2px", borderRadius:"50%"}} alt="" /> Manage Profiles </Link> </li> 
                   <li><Link> <img src="./red.png" style={{width:"1.44vmax", paddingTop:"2px"}} alt="" /> Account </Link> </li> 
                   <hr></hr>
-                  <li className='signout-box' > <Link>  Sign Out  </Link> </li> 
+                  <li className='signout-box'
+                  onClick={()=>signoutHandler()}
+                  > <Link
+                    className='signout-text'
+                  >  Sign Out  </Link> </li> 
                 </ul>
               </div>
-              
+              <div>
 
+              <Featuredshow/>       
+                {/* 
+              <List  list={list && list[0]} />
+              <List  list={list && list[1]} /> */}
+                {
+                  list && list.length > 0 ?
+                  (
+                    <div>
+                  {list.map((item, index) => (
+                    <List key={index} list={item} />
+                  ))}
+                </div> 
+                  )
+                : (
+                  null
+                )
+                }
+              
+              </div>
+
+            </Fragment>
+            
+
+          }
     </Fragment>
   )
 }

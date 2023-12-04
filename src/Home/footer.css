@@ -1,0 +1,62 @@
+.footer-container{
+    height: 50vh;
+    width: 100vw;
+    background-color: rgb(21, 21, 21);
+    color: grey;
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+   
+}
+
+.footer-container > div {
+    display: flex;
+    /* border: 1px solid white; */
+    width: 67vw;
+    height: 47vh;
+    margin-left: 14vmax;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.social-links{
+    display: flex;
+    justify-content: flex-start;
+    gap: 2vmax;
+    margin-top: 4vmax;
+
+}
+
+.social-links > a{
+    text-decoration: none;
+    color: white;
+}
+
+.footer-element{
+    display: flex;
+    justify-content: flex-start;
+    
+}
+
+.footer-element > div > ul  {
+    width: 15vmax;
+    /* border: 1px solid ; */
+    margin-top: 2vmax;
+
+}
+
+.footer-element > div > ul > li {
+    text-decoration: none;
+    list-style: none;
+    font-size: 1vmax;
+    cursor: pointer;
+    padding: 0.7vmax;
+}
+
+.netflix-inc{
+    font-size: 1vmax;
+    margin-top: 1.6vmax;
+}
+
+.footer-link-image{
+    width: 2vmax;
+    
+}

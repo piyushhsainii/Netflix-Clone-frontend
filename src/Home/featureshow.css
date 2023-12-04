@@ -1,0 +1,114 @@
+.featured-show-container{
+    height: 99vh;
+    position: relative;
+    background-color: rgb(5, 5, 5);
+    z-index: 11;
+}
+
+.featured-url{
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.featured-show-container > div {
+    position: relative;
+    bottom: 30vmax;
+    left: 2vmax;
+}
+.featured-show-container > div > div  {
+    color: white;
+    width: 500px;
+    font-size: 1.4vmax;
+    text-shadow: 2px 2px solid black ;
+    font-weight: 600;
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+    margin-left: 1.4vmax;
+
+}
+
+.featured-show-container > div > div > p {
+    text-shadow: 2px 2px 3px  black;
+}
+
+.movie-img-title{
+    width: 350px;
+    height: 200px;
+    margin-left: 1vmax;
+
+}
+
+.featured-show-container > div > div > button {    
+    padding: 0.6vmax 2.2vmax;
+    margin: 1vmax;
+    font-size: 1.3vmax;
+    font-weight: 600;
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+    border: none;
+    text-align: center;
+    margin-top: 2vmax;
+    margin-right: 0.6vmax;
+    margin-left: 0.6vmax;
+    transition: 0.4s all;
+    cursor: pointer;
+    padding-bottom: 1vmax;
+    border-radius: 6px;
+}
+
+.featured-show-container > div > div > button:hover {
+    background-color: rgb(222, 222, 222);
+}
+.more-info{
+    background-color: rgb(77 78 77);
+    color: white;
+}
+
+.play-button-img{
+    background-color: unset !important ;
+    width: 1.6vmax;
+    position: relative;
+    top: 4px;
+}
+.play-button-img-2{
+    background-color: unset !important ;
+    width: 1.6vmax;
+    text-align: center;
+    position: relative;
+    top: 4px;
+    right: 7px;
+}
+
+.play-btn{
+    text-align: center;
+
+}
+
+.arrow-btns , .arrow-btns-2{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 4vmax;
+    padding: 0vmax 1vmax ;
+    cursor: pointer;
+    transition: 0.4s all;
+}
+
+
+.arrow-btns:hover ,  .arrow-btns-2:hover {
+    background-color: rgba(69, 69, 69, 0.337);
+
+}
+
+.more-info:hover{
+    background-color: rgb(65, 65, 65) !important ;
+}
+
+.arrow-btns{
+    left: 6vmax;
+}
+

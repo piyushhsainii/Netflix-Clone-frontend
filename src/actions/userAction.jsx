@@ -1,5 +1,5 @@
 import React from 'react'
-import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS }  from '../constants/user'
+import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNOUT_USER_REQUEST, SIGNOUT_USER_RESET, SIGNOUT_USER_SUCCESS, SIGNUP_FAIL, SIGNUP_REQUEST, SIGNUP_SUCCESS }  from '../constants/user'
 import axios from 'axios'
 
 const config = {
@@ -56,7 +56,7 @@ export const LoadUser = () => async(dispatch) => {
     } catch (error) {
         dispatch({
             type:LOAD_USER_FAIL,
-            payload:error.response.data
+            payload:error
         })
     }
 }
@@ -66,3 +66,47 @@ export const clearErrors = () => (dispatch) => {
 }
 
 export default userAction
+
+
+
+export const registerUser = (name , email , password)=> async(dispatch)=>{
+    try {
+        dispatch({
+            type:SIGNUP_REQUEST
+        })
+
+        const { data } = await axios.post('http://localhost:5000/register',
+        {name ,email,password},
+        config
+        )
+        dispatch({
+            type:SIGNUP_SUCCESS,
+            payload:data
+        })
+
+    } catch (error) {
+        dispatch({
+            type:SIGNUP_FAIL
+        })
+    }
+}
+export const signOutUser = ()=> async(dispatch)=>{
+    try {
+        dispatch({
+            type:SIGNOUT_USER_REQUEST
+        })
+
+        const { data } = await axios.get('http://localhost:5000/logout',
+        config
+        )
+        dispatch({ 
+            type:SIGNOUT_USER_SUCCESS,
+            payload:data
+        })
+
+    } catch (error) {
+        dispatch({
+            type:SIGNUP_FAIL
+        })
+    }
+}

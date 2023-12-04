@@ -1,0 +1,156 @@
+
+.list-parent-container{
+    width: 100vw;
+    background-color: rgb(21, 21, 21);
+    padding-top: 1.5vmax;
+    padding-bottom: 0.3vmax;    
+    
+}
+
+.list-container{
+    display: flex;
+    margin: auto;
+    overflow: visible; 
+    /* width: 96vw; */
+    /* margin-left: 3vmax; */
+
+}
+
+.list-container > div {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: visible;
+    height: 180px;
+    width: 96vw;
+    margin: auto;
+
+}
+
+.card {
+    width: 280px;
+    height: 160px;
+    margin: auto;
+    margin: 0.1rem;
+    margin-top: 0.8rem;
+    cursor: pointer;
+    transition: 0.5s all;
+
+}
+.card:hover {
+      transform: translateY(-10px);
+      transform: scale(1.2);
+      margin-left:  2rem;
+      margin-right:  2rem;
+    }
+
+.link-card{
+    height: 158px !important ;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+.list-title{
+    font-family: sans-serif;
+    padding-left: 3.3vmax;
+    color: rgb(251, 251, 251);
+    font-size: 1.175rem;
+    font-weight: 600;
+    line-height: 1.75rem;
+    letter-spacing: 1px;
+    
+}
+
+.dialogBox{
+    width: 60vw !important;
+    margin: auto;
+    margin-top: 2vmax;
+}
+
+
+.hi{
+    width: 900px;
+    height: 104vh;
+    overflow: hidden;
+}
+.MuiDialogContent-root , .MuiDialog-paperWidthSm{
+    width: 900px !important;
+    height: 700px !important;
+
+
+}
+.MuiDialog-paperWidthSm{
+    max-width: 900px !important;
+    overflow: hidden !important;
+}
+
+.MuiDialog-paperScrollPaper {
+    max-height: calc(100% - 0px) !important ;
+}
+
+.MuiDialog-paper{
+    margin: 0px !important;
+    height: 700px !important;
+    background-color: rgb(15, 15, 15) !important;
+    width: 900px !important;
+}
+
+.MuiDialog-container{
+    height: unset;
+}
+
+.MuiDialogContent-root{
+    padding: 0px !important;
+}
+
+.movie-dialog-box-image{
+    background-size: cover;
+    width: 60vmax;
+    height: 420px;
+}
+
+.movie-dialog-box-desc{
+    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif !important ;
+    margin-top: 1vmax;
+    color: white;
+}
+
+.movie-dialog-box-desc > div{
+    padding: 0.7vmax 1vmax ;
+    padding-left: 2vmax;
+}
+
+.movie-dialog-box-desc> div:nth-child(1){
+    font-size: 2vmax;
+    font-weight: 500;
+
+}
+.movie-dialog-box-desc> div:nth-child(3){
+    font-size: 1.1vmax;
+
+}
+
+.movie-dialog-box-desc> div:nth-child(2){
+    max-width: 55vmax;
+    font-size: 1.1vmax;
+}
+
+.close-action-button{
+    position: absolute;
+    border-radius: 100vmax;
+    color: rgb(215, 215, 215);
+    font-family: sans-serif;
+    padding: 0.7vmax 1vmax;
+    font-size: 1vmax;
+    font-weight: 600;
+    background-color: rgba(62, 62, 62, 0.552);
+    cursor: pointer;
+    transition: 0.4s all;
+    margin: 1vmax;
+    right: 0;
+}
+
+.close-action-button:hover{
+    background-color: rgb(77, 77, 77);
+
+}   
+

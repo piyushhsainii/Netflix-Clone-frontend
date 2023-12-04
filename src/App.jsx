@@ -8,11 +8,14 @@ import toast, {Toaster} from 'react-hot-toast'
 import Browser from './Home/Browse.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { LoadUser } from './actions/userAction.jsx'
+import TvShows from './Home/TvShows.jsx'
+import Movies from './Home/Movies.jsx'
+import Footer from './Home/Footer.jsx'
 
 function App() {
 
   const dispatch = useDispatch()
-  const { isAuthenticated, loading } = useSelector((state)=>state.loadUser)
+  const { isAuthenticated, loading } = useSelector((state)=>state.User)
 
   useEffect((error)=>{
 
@@ -31,9 +34,15 @@ function App() {
       <Route path='/login' element={ <Login /> }/>  
       <Route path='/signup' element={ <Register /> }/> 
       <Route path='/browse' element={ <Browser /> }/>   
+      <Route path='/browse/:id' element={ <Browser />}/>   
+      <Route path='/tvshows' element={ <TvShows /> }/>   
+      <Route path='/tvshow/:id' element={ <TvShows /> }/>   
+      <Route path='/movies' element={ <Movies /> }/>   
+      <Route path='/movie/:id' element={ <Movies /> }/>   
       </Routes>
       <Toaster/>
       </Router>
+     {isAuthenticated ? <Footer/> : null } 
     </Fragment>
   )
 }
