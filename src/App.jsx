@@ -11,6 +11,8 @@ import { LoadUser } from './actions/userAction.jsx'
 import TvShows from './Home/TvShows.jsx'
 import Movies from './Home/Movies.jsx'
 import Footer from './Home/Footer.jsx'
+import MyList from './Home/MyList.jsx'
+import Account from './userProfile/account.jsx'
 
 function App() {
 
@@ -39,6 +41,8 @@ function App() {
       <Route path='/tvshow/:id' element={ <TvShows /> }/>   
       <Route path='/movies' element={ <Movies /> }/>   
       <Route path='/movie/:id' element={ <Movies /> }/>   
+      <Route path='/MyList' element={ <MyList /> }/>   
+      <Route path='/account' element={ <Account /> }/>   
       </Routes>
       <Toaster/>
       </Router>

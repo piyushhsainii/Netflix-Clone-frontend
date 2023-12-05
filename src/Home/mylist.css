@@ -1,0 +1,60 @@
+.empty-list-container ,.updateprofile-container {
+    background-color: rgb(21,21,21);
+    width: 100vw;
+    height: 50vh;
+    color: white;
+    font-family: sans-serif;
+}
+
+.empty-list-container > h1{
+    padding-top: 9vmax;
+    padding-left: 4vmax;
+    padding-bottom: 2vmax;
+}
+
+.empty-list-container > h4{
+    padding-left: 4vmax;
+    font-weight: 400 ;
+}
+
+
+.updateprofile-container{
+    height: 55vh;
+    padding-top: 8vmax ;
+
+}
+
+.update-profile-form{
+    max-width: 25vw;
+    margin: auto;
+    border: 1px solid;
+    text-align: center;
+    padding-top: 2vmax ;
+
+}
+
+.update-profile-form > div {
+    padding: 1vmax;
+}
+.update-profile-form > h3 {
+    color: rgb(188, 188, 188) !important ;
+}
+
+
+.update-profile-form > div > input {
+    padding: 1vmax;
+    background-color: transparent;
+    border: 1px solid rgba(128, 128, 128, 0.339);
+    border-radius: 7px;
+    color: white;
+
+}
+
+.update-profile-form > div > button {
+    padding: 1.4vmax 5.2vmax;
+    margin-bottom: 1.9vmax;
+    background-color: red;
+    border: none;
+    color: white;
+    font-weight: 600;
+}

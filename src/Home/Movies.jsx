@@ -159,7 +159,7 @@ import { LoadUser, signOutUser } from '../actions/userAction'
                 Profile 2
                 </Link> </li>
                 <li> <Link> <img src="./edit.png" style={{width:"1.5vmax", paddingTop:"2px", borderRadius:"50%"}} alt="" /> Manage Profiles </Link> </li> 
-                <li><Link> <img src="./red.png" style={{width:"1.44vmax", paddingTop:"2px"}} alt="" /> Account </Link> </li> 
+                <li><Link to='/account' > <img src="./red.png" style={{width:"1.44vmax", paddingTop:"2px"}} alt="" /> Account </Link> </li> 
                 <hr></hr>
                 <li className='signout-box'
                 onClick={()=>signoutHandler()}

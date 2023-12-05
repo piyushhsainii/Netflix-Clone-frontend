@@ -1,101 +1,72 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import "./browse.css"
-import toast from 'react-hot-toast'
-import List from './List';
-import   getListAction  from '../actions/listAction'
-import Loader from '../loader/Loader'
-import Featuredshow from './featuredshow';
-import { LoadUser, signOutUser } from '../actions/userAction'
+import Loader from '../loader/loader';
+import './mylist.css'
 
-const Home = () => {
+const MyList = () => {
 
-  const { isAuthenticated, loading , user } = useSelector((state) => state.User)
-  const { list , loading:listloading } = useSelector((state)=>state.List)
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const [image, setImage] = useState('./red.png')
-  const [isInputVisible, setIsInputVisible] = useState(false);
-  const [open, setopen] = useState(false)
-  const [scrolled, setScrolled] = useState(false);
-
-  const searchRef = useRef(null);
-  const NavRef = useRef(null);
-
-  const handleImageClick = () => {
-    setIsInputVisible((prev) => !prev);
-  };
-
-  const signoutHandler = ()=>{
-    dispatch(signOutUser())
-  }
-
-  const handleDocumentClick = (e) => {
-    if (searchRef.current && !searchRef.current.contains(e.target)) {
-      setIsInputVisible(false);
+    const searchRef = useRef(null);
+    const NavRef = useRef(null);
+    const signoutHandler = ()=>{
+      dispatch(signOutUser())
     }
-  };
-
+    
   const [isHovered, setIsHovered] = useState(false);
+  const [isInputVisible, setIsInputVisible] = useState(false);
   
   const togglestate = () => { 
     setIsHovered((prev)=>!prev);
   };
-
-  const handleNavClick = (e) => {
-    if (NavRef.current && !NavRef.current.contains(e.target)) {
-      setIsHovered(false);
-    }
+  const handleImageClick = () => {
+    setIsInputVisible((prev) => !prev);
   };
+  const [scrolled, setScrolled] = useState(false);
+  const { isAuthenticated, loading , user } = useSelector((state) => state.User)
+  const { list , loading:MyListLoading } = useSelector((state) => state.MyList)
+  const navigate = useNavigate()
 
-  const type = 'Movie Series'
-
-
-  useEffect(() => {
-  dispatch(getListAction(type))
-    // dispatch(getListAction({genre:'horror'}))
-
+  useEffect(()=>{
     if (loading === false) {
-      isAuthenticated ? navigate('/browse') : navigate('/')
-    }
-  
-    
-    document.addEventListener('click', handleDocumentClick);
-    document.addEventListener('click', handleNavClick);
-
-    const handleScroll = () => {
-      const scrollThreshold = 175; 
-      
-      if (window.scrollY > scrollThreshold) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+        isAuthenticated ? navigate('/MyList') : navigate('/')
       }
-    };
-    // Add event listener for the scroll event
-    window.addEventListener('scroll', handleScroll);
 
-
-    return () => {
-      document.removeEventListener('click', handleDocumentClick);
-      document.removeEventListener('click', handleNavClick);
-      window.removeEventListener('scroll', handleScroll);
-    };
+      const handleDocumentClick = (e) => {
+        if (searchRef.current && !searchRef.current.contains(e.target)) {
+          setIsInputVisible(false);
+        }
+      };
+      const handleNavClick = (e) => {
+        if (NavRef.current && !NavRef.current.contains(e.target)) {
+          setIsHovered(false);
+        }
+      };
     
+      const handleScroll = () => {
+            const scrollThreshold = 175;
+            
+            if (window.scrollY > scrollThreshold) {
+              setScrolled(true);
+            } else {
+              setScrolled(false);
+            }
+          };
+          window.addEventListener('scroll', handleScroll);
+        return () => {
+            document.removeEventListener('click', handleDocumentClick);
+            document.removeEventListener('click', handleNavClick);
+            window.removeEventListener('scroll', handleScroll);
+          };
+  },[isAuthenticated, loading  ])
 
-  }, [isAuthenticated, loading , dispatch    ])
-  console.log(user)
   return (
     <Fragment>
-      {
+         {
         loading ? 
         <Loader/> : 
           
           <Fragment>
-            <div className={`navbar-browse ${scrolled ? 'addgradient' : ''}  `}
-      >
+            <div className={`navbar-browse ${scrolled ? 'addgradient' : ''}  `}>
         <div className='navbar-bar-buttons' >
           <div>
             <img src="netflix-logo-0.png" alt="" className='netflix-login-logo-browse' />
@@ -153,7 +124,7 @@ const Home = () => {
                 <ul              
                 >                 
                   <li> <Link
-                  to='/Profile' 
+                  to='/Profile'
                   >
                    <img src="./red.png" style={{width:"1.44vmax", paddingTop:"2px"}} alt="" />
                   { user?.name }
@@ -168,34 +139,19 @@ const Home = () => {
                   >  Sign Out  </Link> </li> 
                 </ul>
               </div>
-              <div>
-
-              <Featuredshow/>       
-                {/* 
-              <List  list={list && list[0]} />
-              <List  list={list && list[1]} /> */}
-                {
-                  list && list.length > 0 ?
-                  (
-                    <div>
-                  {list.map((item, index) => (
-                    <List key={index} list={item} />
-                  ))}
-                </div> 
-                  )
-                : (
-                  null
-                )
-                }
-              
+              <div></div>
+              <div
+              className='empty-list-container'
+              >
+                <h1> Your List is Empty</h1>
+                <h4
+                style={{color:"rgb(148 163 184)"}}
+                > Add shows and movies to your list to watch them later</h4>
               </div>
-
-            </Fragment>
-            
-
-          }
+              </Fragment>
+         }
     </Fragment>
   )
 }
 
-export default Home
+export default MyList

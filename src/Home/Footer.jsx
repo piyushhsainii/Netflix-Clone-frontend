@@ -14,7 +14,7 @@ const Footer = () => {
                     <a href="#"><img 
                     className='footer-link-image'
                     src="./github.png" alt="" /> </a>
-                    <a href="#"><img 
+                    <a href="#"><img  
                     className='footer-link-image'
                     src="./linkedin-logo.png" alt="" /></a>
                   
