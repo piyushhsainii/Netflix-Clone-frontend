@@ -3,7 +3,7 @@ import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOG
 import axios from 'axios'
 
 const localserver = 'http://localhost:5000'
-const mainserver = 'https://netflix-clone-smoky-one.vercel.app/'
+const mainserver = 'https://netflix-clone-iaj6.onrender.com'
 
 const config = {
     headers:{
