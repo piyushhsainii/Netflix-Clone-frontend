@@ -1,5 +1,5 @@
 import React from 'react'
-import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNOUT_USER_REQUEST, SIGNOUT_USER_RESET, SIGNOUT_USER_SUCCESS, SIGNUP_FAIL, SIGNUP_REQUEST, SIGNUP_SUCCESS }  from '../constants/user'
+import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNOUT_USER_REQUEST, SIGNOUT_USER_RESET, SIGNOUT_USER_SUCCESS, SIGNUP_FAIL, SIGNUP_REQUEST, SIGNUP_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS }  from '../constants/user'
 import axios from 'axios'
 
 const config = {
@@ -86,7 +86,8 @@ export const registerUser = (name , email , password)=> async(dispatch)=>{
 
     } catch (error) {
         dispatch({
-            type:SIGNUP_FAIL
+            type:SIGNUP_FAIL,
+            payload:error
         })
     }
 }
@@ -107,6 +108,28 @@ export const signOutUser = ()=> async(dispatch)=>{
     } catch (error) {
         dispatch({
             type:SIGNUP_FAIL
+        })
+    }
+}
+
+export const updateUser = ({name, email})=> async(dispatch)=>{
+    try {
+        dispatch({
+            type:UPDATE_USER_REQUEST
+        })
+
+        const { data } = await axios.put('http://localhost:5000/updateUser',
+        {name, email},
+        config
+        )
+        dispatch({ 
+            type:UPDATE_USER_SUCCESS,
+            payload:data
+        })
+
+    } catch (error) {
+        dispatch({
+            type:UPDATE_USER_FAIL
         })
     }
 }

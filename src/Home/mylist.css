@@ -58,3 +58,17 @@
     color: white;
     font-weight: 600;
 }
+
+.mylist-container > div{
+    padding-top: 4vmax;
+    background-color: rgb(21, 21, 21);
+}
+
+
+
+@media screen and (max-width:475px) {
+    .update-profile-form{        
+        min-width: 25vmax;
+        padding: 12vmax 4vmax;
+    }
+}

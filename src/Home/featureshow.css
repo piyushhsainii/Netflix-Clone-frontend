@@ -32,6 +32,7 @@
 
 .featured-show-container > div > div > p {
     text-shadow: 2px 2px 3px  black;
+    max-width: 35vmax;
 }
 
 .movie-img-title{
@@ -112,3 +113,27 @@
     left: 6vmax;
 }
 
+
+@media screen and (max-width:475px) {
+    .featured-show-container {
+    height: 50vh;
+    }
+.featured-show-container > div > div  {
+    width: 240px;   
+}
+
+.featured-show-container > div{
+    width: 270px;
+    bottom: 30vmax;
+}
+.featured-url{
+    width: 100vw;
+    height: 50vh;
+}
+
+.movie-img-title {
+    height: 90px;
+    width: 220px;
+
+}
+}

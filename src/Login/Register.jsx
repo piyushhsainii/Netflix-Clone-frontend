@@ -3,12 +3,13 @@ import './register.css'
 import { Button, Typography } from '@material-ui/core'
 import { Link,  useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {  registerUser} from '../actions/userAction' 
+import {  LoadUser, registerUser} from '../actions/userAction' 
 import Loader from '../loader/Loader'
 import toast from 'react-hot-toast'
+import { CLEAR_ERRORS } from '../constants/list'
 
 const Register = () => {
-    const {isAuthenticated, loading} = useSelector((state)=>state.signUp)
+    const {isAuthenticated, loading, error} = useSelector((state)=>state.signUp)
     const {isAuthenticated:isAuthenticated2, loading:loading2} = useSelector((state)=>state.User)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -17,18 +18,28 @@ const Register = () => {
     const [email, setemail] = useState()
     const [password, setpassword] = useState()
 
-    useEffect((error)=>{
-        if(loading2===false){
-            isAuthenticated2 ? navigate('/browse') : {}
-          }
-          if(loading===false){
-              toast.success('User registered successfully')
-              isAuthenticated ? navigate('/browse') : {}
-          }
+    useEffect(()=>{
+        // if(loading2===false){
+        //     isAuthenticated2 ? navigate('/browse') : {}
+        //   }
+        //   if(loading===false){
+        //       toast.success('User registered successfully')
+        //       isAuthenticated ? navigate('/browse') : {}
+        //   }
+          if(isAuthenticated===true){
+            toast.success("Logged In Successfully")
+            navigate('/browse')
+
+            dispatch(LoadUser())
+
+        }
           if(error){
-            toast.error(error)
+            toast.error(error.response.data.message)
+            dispatch({type:
+                CLEAR_ERRORS
+            })
           }
-    },[isAuthenticated2, loading2,loading , isAuthenticated, dispatch])
+    },[isAuthenticated2, loading2,loading , isAuthenticated, dispatch,error])
 
       
     const registerHandler = ()=>{

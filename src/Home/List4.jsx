@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import './List.css';
-import ListItem from './ListItem.jsx' 
+import ListItem4 from './ListItem4.jsx' 
 
 const List = ({ list }) => {
   const scrollContainerRef = useRef(null);
@@ -22,15 +22,12 @@ const List = ({ list }) => {
 
   return (
     <Fragment>
-      {
-        list &&  list.content.length > 1? 
         <div 
         className='list-parent-container'
-
         >
         <h2
         className='list-title'
-        >{list && list.title  } </h2>
+        >{list?.title} </h2>
 
       <div className="list-container">
 
@@ -42,10 +39,9 @@ const List = ({ list }) => {
         </a>
        
         <div ref={scrollContainerRef}  >
-            {list && list.content.length > 1 ? list.content.map((item, index) => (
-                <ListItem key={index} item={item} />
-                )) : null
-              } 
+            {list && list.content.map((item, index) => (
+                <ListItem4 key={index} item={item} />
+                ))}
         </div>
         <a
         
@@ -55,11 +51,7 @@ const List = ({ list }) => {
         &#8250;
         </a>
     </div>
-            </div> : (
-              null
-            )
-      }
-        
+            </div>
     </Fragment>
   );
 };

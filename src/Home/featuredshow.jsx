@@ -12,22 +12,69 @@ import {
     Button
   
   } from "@material-ui/core"
+import { RESET_MOVIE } from '../constants/movie'
+import { RESET_STATE_MOVIE } from '../constants/list'
+import { RemoveFromListAction, createListAction, getAllListAction } from '../actions/listAction'
+import toast from 'react-hot-toast'
   
   
-
-
-const Featuredshow = ({type}) => {
-    const dispatch = useDispatch()
+  const Featuredshow = ({type}) => {
+     const { id } = useParams();
+     const [listID, setlistID] = useState('')
+    const { list:mylist , loading:mylistloading } = useSelector((state)=>state.AllList)
+    const mylistitem = mylist[0] &&  mylist.filter((item)=>item.title === "MyList")
     const { movie , loading } = useSelector((state)=>state.RandomMovie)
+    const checkListItemExist = mylistitem && mylistitem.map((item)=>item.content)
+    const checkItemExist = checkListItemExist && checkListItemExist[0].filter((item=>item === movie[0]?._id))
+
+    const dispatch = useDispatch()
     const [open, setopen] = useState(false)
 
     const openDialogBox = ()=>{
       setopen((prev)=>!prev)
     }
-
+    const removefromlistHandler = ()=>{
+      dispatch(
+        RemoveFromListAction( movie[0]._id , listID )  
+        )
+        
+      }
+  const { loading:removeloading , success:removelistsuccess } = useSelector((state)=>state.RemoveFromList)
+  const { loading:MyListLoading ,success} = useSelector((state) => state.MyList)
+  
+    const addtoListhandler = ()=>{
+      if(checkItemExist[0]===movie[0]._id){
+        toast.error('Already Added')
+      } else {
+       try {
+        dispatch(
+          createListAction(movie[0]?._id,listID)
+      ) 
+       } catch (error) {
+        console.log(error)
+       }
+      }
+     
+    }
     useEffect(()=>{
-        dispatch(getrandomMovie(type))
-    },[])
+      setlistID( mylistitem && mylistitem[0].content.length < 30 ?  mylistitem[0]._id : null )     
+      dispatch(getrandomMovie(type))
+      
+      if(removelistsuccess){
+        toast.success('Removed from the List')
+        dispatch({
+          type:RESET_STATE_MOVIE
+        })
+      }
+      if(success){
+            toast.success('Added to List')
+            dispatch({
+              type:RESET_MOVIE
+            })
+          }
+      dispatch(getAllListAction());
+
+    },[ dispatch ,success ,removelistsuccess ])
   return (  
     <Fragment>
         <div
@@ -72,7 +119,6 @@ const Featuredshow = ({type}) => {
                 className="dialogBox"
                 onClose={openDialogBox}
             >
-                  {/* <DialogTitle> Submit Review </DialogTitle> */}
             <DialogContent>
                 <div>
                 <div onClick={openDialogBox}
@@ -91,6 +137,17 @@ const Featuredshow = ({type}) => {
               <div
               className='movie-dialog-box-desc'
               >
+              {checkItemExist&& checkItemExist[0]===movie[0]._id ? 
+                <img
+                onClick={()=>removefromlistHandler()}
+                src="/add.png" alt="" 
+                className='remove-from-list-icon'
+                ></img> : (
+                  <img
+                  onClick={()=>addtoListhandler()}
+                  src="/add.png" alt="" className='add-to-list-icon' /> 
+                )
+                }
               <div>
               {movie[0].Name}
                 </div>

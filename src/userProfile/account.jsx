@@ -1,13 +1,17 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../loader/loader';
 import '../Home/mylist.css'
+import { LoadUser, updateUser } from '../actions/userAction';
+import toast from 'react-hot-toast'
+import { UPDATE_RESET_USER_FAIL } from '../constants/user';
 
 const Account = () => {
 
     const searchRef = useRef(null);
     const NavRef = useRef(null);
+    const dispatch = useDispatch()
     const signoutHandler = ()=>{
       dispatch(signOutUser())
     }
@@ -23,12 +27,26 @@ const Account = () => {
   };
   const [scrolled, setScrolled] = useState(false);
   const { isAuthenticated, loading , user } = useSelector((state) => state.User)
+  const { success } = useSelector((state) => state.updateUserInfo)
   const navigate = useNavigate()
+  const [name, setname] = useState('')
+  const [email, setEmail] = useState('')
+
+
+
+  const updateUserHandler = ()=>{
+    if(name==='' || email===''){
+      toast.error('Fill all the required fields')
+    }else {
+      dispatch(updateUser({name, email}))
+    }
+  }
 
   useEffect(()=>{
-    if (loading === false) {
-        isAuthenticated ? navigate('/account') : navigate('/')
-      }
+   
+    if (loading === false && isAuthenticated !== null) {
+      navigate(!isAuthenticated ? '/' : (null));
+    }
 
       const handleDocumentClick = (e) => {
         if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -40,7 +58,14 @@ const Account = () => {
           setIsHovered(false);
         }
       };
-    
+      if(success){
+        toast.success('Update User Successfully')
+        dispatch(
+          {type:UPDATE_RESET_USER_FAIL}
+        )
+       dispatch(LoadUser())
+
+      }
       const handleScroll = () => {
             const scrollThreshold = 175;
             
@@ -56,7 +81,7 @@ const Account = () => {
             document.removeEventListener('click', handleNavClick);
             window.removeEventListener('scroll', handleScroll);
           };
-  },[isAuthenticated, loading  ])
+  },[isAuthenticated , success,dispatch  ])
 
   return (
     <Fragment>
@@ -145,18 +170,26 @@ const Account = () => {
                            <div>
                            <input type="text" 
                             placeholder='Enter Name'
+                            value={name}
+                            required
+                            onChange={(e)=>setname(e.target.value)}
                             />
                            </div>
                             <div
                             type="text" 
                             >
                             <input type="text"
-                            placeholder='Enter Password'
-                            
+                            placeholder='Enter Email'
+                            value={email}
+                            required
+                            onChange={(e)=>setEmail(e.target.value)}
                             />
                             </div>
                             <div>
-                            <button> UPDATE </button>
+                            <button
+                            style={{cursor:"pointer"}}
+                            onClick={()=>updateUserHandler()}
+                            > UPDATE </button>
                             </div>
                     </div>
               </div>

@@ -29,7 +29,7 @@
     gap: 2vmax;
 }
 
-.netflix-login-logo{
+.netflix-login-logo-home{
     width: 9.75rem;
     height: 3rem;
     padding: 2vmax;
@@ -190,7 +190,7 @@
         padding: 1.8vmax 5vmax ;
 
     }
-    .netflix-login-logo{
+    .netflix-login-logo-home{
         width: 8rem;
         height: 3rem;
         margin-left: 9vmax;
@@ -213,7 +213,7 @@
     .navbar-element{
         margin-right: 2vmax;
     }
-    .netflix-login-logo{
+    .netflix-login-logo-home{
         margin-left: 1vmax;
     }
 }
@@ -224,13 +224,14 @@
     .navbar-element{
         margin-right: 0;
     }
-    .netflix-login-logo{
-        margin-left: 0;
+    .netflix-login-logo-home {
+        width: 6rem;
+        height: 2rem;
+        padding: 2vmax;
+        padding-top: 1.7vmax;
+        margin-left: 2vmax;
     }
-    .netflix-login-logo{
-        width: 7rem;
-        height: 2.7rem;
-    }
+
     .select-btn{
         font-size: 1.7vmax;
     }

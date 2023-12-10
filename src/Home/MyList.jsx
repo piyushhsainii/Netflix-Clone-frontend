@@ -1,11 +1,13 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import Loader from '../loader/loader';
+import Loader from '../loader/Loader';
 import './mylist.css'
+import List4 from './List4'
+import { getAllListAction } from '../actions/listAction';
 
 const MyList = () => {
-
+    const dispatch = useDispatch()
     const searchRef = useRef(null);
     const NavRef = useRef(null);
     const signoutHandler = ()=>{
@@ -23,8 +25,13 @@ const MyList = () => {
   };
   const [scrolled, setScrolled] = useState(false);
   const { isAuthenticated, loading , user } = useSelector((state) => state.User)
-  const { list , loading:MyListLoading } = useSelector((state) => state.MyList)
+  const { list , loading:MyListLoading ,success } = useSelector((state) => state.MyList)
   const navigate = useNavigate()
+
+  
+  const { list:mylist , loading:mylistloading } = useSelector((state)=>state.AllList)
+  const mylistitem = mylist[0] && mylist.filter((item) => item.title === "MyList")
+  console.log(mylistitem , "all")
 
   useEffect(()=>{
     if (loading === false) {
@@ -41,7 +48,7 @@ const MyList = () => {
           setIsHovered(false);
         }
       };
-    
+     
       const handleScroll = () => {
             const scrollThreshold = 175;
             
@@ -52,17 +59,20 @@ const MyList = () => {
             }
           };
           window.addEventListener('scroll', handleScroll);
+        dispatch(getAllListAction());
         return () => {
             document.removeEventListener('click', handleDocumentClick);
             document.removeEventListener('click', handleNavClick);
             window.removeEventListener('scroll', handleScroll);
           };
-  },[isAuthenticated, loading  ])
+
+  },[isAuthenticated ])
+
 
   return (
     <Fragment>
          {
-        loading ? 
+        mylistloading ? 
         <Loader/> : 
           
           <Fragment>
@@ -92,7 +102,7 @@ const MyList = () => {
           <div>
             <img
               className='notification-logo'
-              src='notification2.png'
+              src='./notification2.png'
               onClick={()=>{
                 toast.success('Nothing to show yet')
               }}
@@ -104,7 +114,7 @@ const MyList = () => {
            >
             <img
               className='notification-logo'
-              src='red.png'
+              src='./red.png'
               onClick={togglestate}
               ref={NavRef}
               ></img>
@@ -140,14 +150,29 @@ const MyList = () => {
                 </ul>
               </div>
               <div></div>
-              <div
-              className='empty-list-container'
-              >
-                <h1> Your List is Empty</h1>
-                <h4
-                style={{color:"rgb(148 163 184)"}}
-                > Add shows and movies to your list to watch them later</h4>
-              </div>
+              {mylistitem && mylistitem.length === 0 ? 
+              (
+                <div
+                className='empty-list-container'
+                >
+                  <h1> Your List is Empty</h1>
+                  <h4
+                  style={{color:"rgb(148 163 184)"}}
+                  > Add shows and movies to your list to watch them later</h4>
+                </div>
+              ) : (
+                <div
+                className='mylist-container'
+                >
+                  <div>
+                {mylistitem && mylistitem.map((item, index) => (
+                  <List4 key={index} list={item} />
+                  ))}
+                  </div>
+              </div> 
+              )
+            }
+             
               </Fragment>
          }
     </Fragment>

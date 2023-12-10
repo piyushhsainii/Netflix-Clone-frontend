@@ -8,12 +8,17 @@ import   getListAction  from '../actions/listAction'
 import Loader from '../loader/Loader'
 import Featuredshow from './featuredshow';
 import { LoadUser, signOutUser } from '../actions/userAction'
+import { RESET_MOVIE } from '../constants/movie';
+import { RESET_STATE_MOVIE } from '../constants/list';
+import axios from 'axios';
 
 const TvShows = () => {
 
     const { isAuthenticated, loading } = useSelector((state) => state.User)
     const { list , loading:listloading } = useSelector((state)=>state.List)
-  
+  const { loading:MyListLoading ,success } = useSelector((state) => state.MyList)
+  const { loading:removeloading , success:removelistsuccess } = useSelector((state)=>state.RemoveFromList)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [image, setImage] = useState('./red.png')
@@ -51,19 +56,79 @@ const TvShows = () => {
     };
 
     const type = 'Series'
+    const config = {
+      headers:{
+          "Content-Type":"application/json",
+          credentials:'include',
+      },
+      withCredentials:true
+  }
+    const Homelistitem = list[0] &&  list.filter((item)=>item.type === "Series")
 
-    useEffect(() => {
-        // dispatch(getListAction())
-        dispatch(getListAction(type))
+    const [searchInput, setSearchInput] = useState('');
+    const [filteredContent, setFilteredContent] = useState([]);
     
-        // if (loading === false) {
-        //   isAuthenticated ? navigate('/browse') : navigate('/')
-        // }
+    const handleSearchInputChange = (e) => {
+      setSearchInput(e.target.value);
+      handleSearch();
+    };
+  
+    const handleSearch = async () => {
+      if (searchInput !== '') {
+        
+        const filtered = await Promise.all(
+          Homelistitem.map(async (item) => {
+            const movieDetailsPromises = item.content.map(async (movieId) => {
+              const {data}= await axios.get(`http://localhost:5000/getMovie/${movieId}`,
+            config);
+              const movieDetails = data.movie
+              
+              if (movieDetails.Name.toLowerCase().includes(searchInput.toLowerCase())) {
+                return movieId;
+              }
       
+              return null; // Return null for non-matching movies
+            });
+    
+             const matchingMovieIds = (await Promise.all(movieDetailsPromises)).filter((id) => id !== null);
+             return {
+              ...item,
+              content: matchingMovieIds,
+            };
+          })
+        );
+    
+        const result = filtered.flat();
+    
+      setFilteredContent(result);
+      }else {
+        // If the search input is empty, reset the content to the original list
+        setFilteredContent(Homelistitem);
+      }
+    };
+    useEffect(() => {
+        dispatch(getListAction(type))
         
         document.addEventListener('click', handleDocumentClick);
         document.addEventListener('click', handleNavClick);
-    
+
+        if (loading === false && isAuthenticated !== null) {
+          navigate(!isAuthenticated ? '/' : (null));
+        }
+        
+        if(success){
+          toast.success('Added to List')
+          dispatch({
+            type:RESET_MOVIE 
+          })
+        }
+        if(removelistsuccess){
+          toast.success('Removed from the List')
+          dispatch({
+            type:RESET_STATE_MOVIE
+          })
+        }
+
         const handleScroll = () => {
           const scrollThreshold = 175;
           
@@ -84,7 +149,7 @@ const TvShows = () => {
         };
         
     
-      }, [isAuthenticated, loading , dispatch    ])
+      }, [isAuthenticated, loading , dispatch , success , removelistsuccess   ])
 
   return (
     <Fragment>
@@ -112,7 +177,10 @@ const TvShows = () => {
         >
           <input
             className={`input-box ${isInputVisible ? 'toggle' : ''}`}
-            type="text" placeholder="Titles, people, genres" />
+            type="text" placeholder="Titles, people, genres" 
+            value={searchInput}
+              onChange={handleSearchInputChange}
+            />
           <img className="img"
             onClick={handleImageClick}
             src="search.png" alt="" />
@@ -120,7 +188,7 @@ const TvShows = () => {
         <div>
           <img
             className='notification-logo'
-            src='notification2.png'
+            src='./notification2.png'
             onClick={()=>{
               toast.success('Nothing to show yet')
             }}
@@ -172,12 +240,26 @@ const TvShows = () => {
             <Featuredshow
             type={'series'}
             />       
-
-          {
-            list[0] && list.map((item)=>(
-              <List2 list={item} />
-            ))
-          }
+              {     
+                listloading ? 
+                <Loader/>
+                : 
+                (
+                  filteredContent.length > 0 ? (
+                    <div>
+                      {filteredContent  && filteredContent.map((item, index) => (
+                        <List2 key={index} list={item} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div>
+                      {Homelistitem && Homelistitem.map((item, index) => (
+                        <List2 key={index} list={item} />
+                      ))}
+                    </div>
+                    )
+                )
+              }
             </div>
 
           </Fragment>

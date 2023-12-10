@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_LIST_FAIL, CREATE_LIST_REQUEST, CREATE_LIST_SUCCESS, GET_LIST_FAIL, GET_LIST_REQUEST, GET_LIST_SUCCESS } from "../constants/list"
+import { CREATE_LIST_FAIL, CREATE_LIST_REQUEST, CREATE_LIST_SUCCESS, GET_ALL_LIST_FAIL, GET_ALL_LIST_REQUEST, GET_ALL_LIST_SUCCESS, GET_LIST_FAIL, GET_LIST_REQUEST, GET_LIST_SUCCESS, REMOVE_FROM_LIST_FAIL, REMOVE_FROM_LIST_REQUEST, REMOVE_FROM_LIST_SUCCESS } from "../constants/list"
 
 const config = {
     headers:{
@@ -29,17 +29,37 @@ const getListAction = ( type = '', genre = ''  )=> async( dispatch )=>{
         })
     }
 }
+export const getAllListAction = ( type = '', genre = ''  )=> async( dispatch )=>{
+    try {
+        dispatch({
+            type:GET_ALL_LIST_REQUEST
+        }) 
+
+        const  { data } = await axios.get(`http://localhost:5000/getList?type=${type ? type :''}&genre=${genre ? genre : ''}`    
+        ,config)
+
+        dispatch({
+            type:GET_ALL_LIST_SUCCESS,
+            payload:data
+        })
+    } catch (error) {
+        dispatch({
+            type:GET_ALL_LIST_FAIL,
+            payload:error
+        })
+    }
+}
 
 export default getListAction
 
-export const createListAction = ( title='My List', type='MyList' , genre='MyList', content )=> async( dispatch )=>{
+export const createListAction = (content , id , title='My List', type='MyList' , genre='MyList',  )=> async( dispatch )=>{
     try {
         dispatch({
             type: CREATE_LIST_REQUEST
         }) 
 
-        const  { data } = await axios.get(`http://localhost:5000/createlist` , 
-        {title, type , genre, content}, 
+        const  { data } = await axios.put(`http://localhost:5000/CreateandUpdateMyList` , 
+        {title, type , genre, content , id}, 
         config)
 
         dispatch({
@@ -49,6 +69,28 @@ export const createListAction = ( title='My List', type='MyList' , genre='MyList
     } catch (error) {
         dispatch({
             type:CREATE_LIST_FAIL,
+            payload:error
+        })
+    }
+}
+
+export const RemoveFromListAction = (content , id )=> async( dispatch )=>{
+    try {
+        dispatch({
+            type: REMOVE_FROM_LIST_REQUEST
+        }) 
+        
+        const  { data } = await axios.put(`http://localhost:5000/deleteElementMyList` , 
+        {content , id}, 
+        config)
+
+        dispatch({
+            type:REMOVE_FROM_LIST_SUCCESS,
+            payload:data
+        })
+    } catch (error) {
+        dispatch({
+            type:REMOVE_FROM_LIST_FAIL,
             payload:error
         })
     }

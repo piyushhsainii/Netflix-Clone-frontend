@@ -38,7 +38,6 @@
 
 .footer-element > div > ul  {
     width: 15vmax;
-    /* border: 1px solid ; */
     margin-top: 2vmax;
 
 }
@@ -59,4 +58,23 @@
 .footer-link-image{
     width: 2vmax;
     
+}
+
+
+@media screen and (max-width:475px) {
+    .footer-container > div {
+        margin-left: 3vmax;
+    }
+    .footer-element > div > ul  {
+        width: 13vmax;
+    }
+    .footer-element > div > ul > li {
+        padding: 0.7vmax 0.1vmax ;
+    }
+    .footer-element  {
+        flex-wrap: wrap;
+    }
+    .footer-container{
+        padding-top: 13vmax;
+    }
 }

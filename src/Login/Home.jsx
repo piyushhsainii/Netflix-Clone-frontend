@@ -23,7 +23,7 @@ const Home = () => {
          </div>
 
          <div className='navbar' >
-            <img src="netflix-logo-0.png" alt="" className='netflix-login-logo' />
+            <img src="netflix-logo-0.png" alt="" className='netflix-login-logo-home' />
             <div className='navbar-element' >
             <select 
             className='select-btn' 

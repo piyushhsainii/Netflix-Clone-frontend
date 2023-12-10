@@ -34,6 +34,7 @@
     margin-top: 0.8rem;
     cursor: pointer;
     transition: 0.5s all;
+    overflow: hidden;
 
 }
 .card:hover {
@@ -119,17 +120,19 @@
     padding-left: 2vmax;
 }
 
-.movie-dialog-box-desc> div:nth-child(1){
+.movie-dialog-box-desc> div:nth-child(2){
     font-size: 2vmax;
     font-weight: 500;
+    padding-top: 1.5vmax;
 
 }
-.movie-dialog-box-desc> div:nth-child(3){
+.movie-dialog-box-desc> div:nth-child(4){
     font-size: 1.1vmax;
+    width: 55vmax;
 
 }
 
-.movie-dialog-box-desc> div:nth-child(2){
+.movie-dialog-box-desc> div:nth-child(3){
     max-width: 55vmax;
     font-size: 1.1vmax;
 }
@@ -154,3 +157,51 @@
 
 }   
 
+.add-to-list-icon{
+    width: 1.8vmax;
+    margin-left: 2vmax;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.4s all;
+}
+.add-to-list-icon:hover , .remove-from-list-icon:hover{
+    box-shadow: 0.4px 0.4px 3px white;
+}
+
+.MuiDialogActions-root{
+    padding: 0px !important;
+}
+
+.remove-from-list-icon{
+    width: 1.8vmax;
+    margin-left: 2vmax;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.4s all;
+    transform: rotate(45deg); 
+
+}
+
+
+@media screen and (max-width:475px) {
+    .card{
+        width: 194px;
+        height: 137px;
+    }
+    .dialogBox{
+        width: 80vw !important;
+    }
+    .dialog-image{
+        background-size: cover;
+    }
+    .hi{
+        height: 80vh;
+    }
+    .movie-dialog-box-desc> div:nth-child(2){
+        font-size: 2.8vmax;
+    }
+    .movie-dialog-box-desc> div:nth-child(3), .movie-dialog-box-desc> div:nth-child(4){
+        width: 25vmax;
+        font-size: 1.4vmax;
+    }
+}

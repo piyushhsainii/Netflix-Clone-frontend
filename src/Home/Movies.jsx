@@ -8,12 +8,17 @@ import   getListAction  from '../actions/listAction'
 import Loader from '../loader/Loader'
 import Featuredshow from './featuredshow';
 import { LoadUser, signOutUser } from '../actions/userAction'
+import { RESET_STATE_MOVIE } from '../constants/list';
+import { RESET_MOVIE } from '../constants/movie';
+import axios from 'axios';
 
 
     const Movies = () => {
     const { isAuthenticated, loading } = useSelector((state) => state.User)
     const { list , loading:listloading } = useSelector((state)=>state.List)
-  
+    const { loading:MyListLoading ,success } = useSelector((state) => state.MyList)
+    const { loading:removeloading , success:removelistsuccess } = useSelector((state)=>state.RemoveFromList)
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [image, setImage] = useState('./red.png')
@@ -52,15 +57,86 @@ import { LoadUser, signOutUser } from '../actions/userAction'
 
     const type = 'Movie'
 
+    const config = {
+      headers:{
+          "Content-Type":"application/json",
+          credentials:'include',
+      },
+      withCredentials:true
+  }
+    const Homelistitem = list[0] &&  list.filter((item)=>item.type === "Movie")
+
+    const [searchInput, setSearchInput] = useState('');
+    const [filteredContent, setFilteredContent] = useState([]);
+    
+    const handleSearchInputChange = (e) => {
+      setSearchInput(e.target.value);
+      handleSearch();
+    };
+  
+    const handleSearch = async () => {
+      if (searchInput !== '') {
+        
+        const filtered = await Promise.all(
+          Homelistitem.map(async (item) => {
+            const movieDetailsPromises = item.content.map(async (movieId) => {
+              const {data}= await axios.get(`http://localhost:5000/getMovie/${movieId}`,
+            config);
+              const movieDetails = data.movie
+              
+              if (movieDetails.Name.toLowerCase().includes(searchInput.toLowerCase())) {
+                return movieId;
+              }
+      
+              return null; // Return null for non-matching movies
+            });
+    
+             const matchingMovieIds = (await Promise.all(movieDetailsPromises)).filter((id) => id !== null);
+             return {
+              ...item,
+              content: matchingMovieIds,
+            };
+          })
+        );
+    
+        const result = filtered.flat();
+    
+      setFilteredContent(result);
+      }else {
+        // If the search input is empty, reset the content to the original list
+        setFilteredContent(Homelistitem);
+      }
+    };
+
     useEffect(() => {
         // dispatch(getListAction())
         dispatch(getListAction(type))
-    
-        // if (loading === false) {
-        //   isAuthenticated ? navigate('/browse') : navigate('/')
-        // }
-      
-        
+        if (loading === false && isAuthenticated !== null) {
+          navigate(!isAuthenticated ? '/' : (null));
+        }
+
+        if (loading === false && isAuthenticated !== null) {
+          navigate(!isAuthenticated ? '/' : (null));
+        }
+
+        if(success){
+          toast.success('Added to List')
+          dispatch({
+            type:RESET_MOVIE
+          })
+        }
+        if(success){
+          toast.success('Added to List')
+          dispatch({
+            type:RESET_MOVIE
+          })
+        }
+        if(removelistsuccess){
+          toast.success('Removed from the List')
+          dispatch({
+            type:RESET_STATE_MOVIE
+          })
+        }
         document.addEventListener('click', handleDocumentClick);
         document.addEventListener('click', handleNavClick);
     
@@ -84,7 +160,8 @@ import { LoadUser, signOutUser } from '../actions/userAction'
         };
         
     
-      }, [isAuthenticated, loading , dispatch    ])
+      }, [isAuthenticated, loading , dispatch ,success ,removelistsuccess    ])
+
 
 
   return (
@@ -113,7 +190,10 @@ import { LoadUser, signOutUser } from '../actions/userAction'
         >
           <input
             className={`input-box ${isInputVisible ? 'toggle' : ''}`}
-            type="text" placeholder="Titles, people, genres" />
+            type="text" placeholder="Titles, people, genres"
+            value={searchInput}
+            onChange={handleSearchInputChange}
+            />
           <img className="img"
             onClick={handleImageClick}
             src="search.png" alt="" />
@@ -174,11 +254,26 @@ import { LoadUser, signOutUser } from '../actions/userAction'
             type={'movie'}  
             />       
 
-              {
-            list[0] && list.map((item)=>(
-              <List3 list={item} />
-            ))
-          }
+{     
+                listloading ? 
+                <Loader/>
+                : 
+                (
+                  filteredContent.length > 0 ? (
+                    <div>
+                      {filteredContent  && filteredContent.map((item, index) => (
+                        <List3 key={index} list={item} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div>
+                      {Homelistitem && Homelistitem.map((item, index) => (
+                        <List3 key={index} list={item} />
+                      ))}
+                    </div>
+                    )
+                )
+              }
             </div>
 
           </Fragment>

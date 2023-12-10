@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Fragment, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import  getMovie  from '../actions/MovieAction'
 import { Link , Navigate, useNavigate, useParams  } from 'react-router-dom';
 import {
@@ -11,11 +11,7 @@ import {
   Button
 
 } from "@material-ui/core"
-import { RemoveFromListAction, createListAction, getAllListAction } from '../actions/listAction';
-import toast from 'react-hot-toast'
-import Loader from '../loader/Loader';
-import { RESET_STATE_MOVIE } from '../constants/list';
-import { RESET_MOVIE } from '../constants/movie';
+import { createListAction } from '../actions/listAction';
 
 
 const ListItem = ({item={}}) => {
@@ -26,21 +22,9 @@ const ListItem = ({item={}}) => {
   const [movieDetails, setmovieDetails] = useState() 
   const [open, setopen] = useState(false)
 
-  const submitReviewToggle = (e)=>{
-    // e.preventDefault()
+  const submitReviewToggle = ()=>{
     setopen((prev)=>!prev)
   }
-  const [listID, setlistID] = useState('')
-  const { list:mylist , loading:mylistloading } = useSelector((state)=>state.AllList)
-  const { loading:removeloading , success:removelistsuccess } = useSelector((state)=>state.RemoveFromList)
-   const mylistitem = mylist[0] &&  mylist.filter((item)=>item.title === "MyList")
-
-   const removefromlistHandler = ()=>{
-    dispatch(
-      RemoveFromListAction( id , listID )
-    )
-   }
-
   const config = {
     headers:{
         "Content-Type":"application/json",
@@ -48,24 +32,8 @@ const ListItem = ({item={}}) => {
     },
     withCredentials:true
 }
-const { loading:MyListLoading ,success} = useSelector((state) => state.MyList)
-
-// TOAST ON ADDING TO MYLIST
 
 
-const checkListItemExist = mylistitem && mylistitem.map((item)=>item.content)
-const checkItemExist = checkListItemExist && checkListItemExist[0].filter((item=>item === id))
-
-const addtoListhandler = (event)=>{
-    if(checkItemExist[0]===id){
-      toast.error('Already Added')
-    } else {
-      dispatch(
-        createListAction(id,listID)
-    ) 
-    }
-  }
-  // console.log(mylistitem)
   useEffect(()=>{
     const getmovie = async()=>{
 
@@ -84,33 +52,13 @@ const addtoListhandler = (event)=>{
       }
      getMovieDetails()   
     }
-    setlistID( mylistitem && mylistitem[0] ?  mylistitem[0]._id : (null) )
 
-    if(success){
-      // toast.success('Added to List')
-      dispatch({
-        type:RESET_MOVIE
-      })
-    }
-    if(removelistsuccess){
-      // toast.success('Removed from the List')
-      dispatch({
-        type:RESET_STATE_MOVIE
-      })
-    }
-    dispatch(getAllListAction());
-
-    },[item,id , dispatch ,success ,removelistsuccess ])
-  return ( 
+    },[item,id])
+  return (
     <Fragment> 
-      {
-        mylistloading ? 
-        <Loader/> :
-        (
-        <div>
-            <Link
+      <Link
       onClick={submitReviewToggle}
-      to={`/movie/${item}`}
+      to={`/Mylist/${item}`}
       className='link-card'
       >
       <img className="card"  src={movie.movie && movie.movie.ImgSm} />
@@ -121,7 +69,7 @@ const addtoListhandler = (event)=>{
                 className="dialogBox"
                 onClose={submitReviewToggle}
             >
-
+                  {/* <DialogTitle> Submit Review </DialogTitle> */}
             <DialogContent>
                 <div>
                 <div onClick={submitReviewToggle}
@@ -131,27 +79,18 @@ const addtoListhandler = (event)=>{
                     </div> 
                 </div>
              {
-               movieDetails && movieDetails.movie._id === id ?
-               (  <div
-                className='hi'
-                > 
+              movieDetails && movieDetails.movie._id === id ?
+             (  <div
+              className='hi'
+              > 
               <div dangerouslySetInnerHTML={{ __html: movieDetails.movie.trailer }} />
 
               <div
               className='movie-dialog-box-desc'
               >
-                {checkItemExist[0]===id ? 
-                <img
-                onClick={()=>removefromlistHandler()}
-                src="/add.png" alt="" 
-                className='remove-from-list-icon'
-                ></img> : (
-                  <img
-                  onClick={()=>addtoListhandler()}
-                  src="/add.png" alt="" className='add-to-list-icon' /> 
-                )
-                }
-
+             <img src="" alt=""
+              className='add-to-list-icon'
+              />
               <div>
               {movieDetails.movie.Name}
                 </div>
@@ -172,11 +111,9 @@ const addtoListhandler = (event)=>{
             </DialogContent>
 
                 </Dialog>
-        </div>
-        )
-      }
     </Fragment>
   ) 
 }
+
 
 export default ListItem

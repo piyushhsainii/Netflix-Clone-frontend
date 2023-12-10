@@ -188,3 +188,24 @@
     text-decoration: none;
     color: white;
 }
+
+
+@media screen and (max-width:475px) {
+    .netflix-login-logo-browse{
+        display: none;
+        width: 0rem;
+        height: 1.8rem;
+
+    }
+
+    .floating-box-navbar {
+        right: 2vmax;
+    }
+    .navbar-element-browse {
+        margin: 2vmax -2vmax;
+    }
+    .search-box {
+        right: 12vmax;
+        top: 15px;
+    }
+}
