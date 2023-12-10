@@ -39,5 +39,5 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "vite": "^4.4.5"
   },
-  "proxy": "http://192.168.1.10:5000"
+  "proxy": "https://netflix-clone-iaj6.onrender.com/"
 }
