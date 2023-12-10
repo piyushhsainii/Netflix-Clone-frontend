@@ -1,6 +1,10 @@
 import axios from "axios"
 import { CREATE_LIST_FAIL, CREATE_LIST_REQUEST, CREATE_LIST_SUCCESS, GET_ALL_LIST_FAIL, GET_ALL_LIST_REQUEST, GET_ALL_LIST_SUCCESS, GET_LIST_FAIL, GET_LIST_REQUEST, GET_LIST_SUCCESS, REMOVE_FROM_LIST_FAIL, REMOVE_FROM_LIST_REQUEST, REMOVE_FROM_LIST_SUCCESS } from "../constants/list"
 
+const localserver = 'http://localhost:5000'
+const mainserver = 'https://netflix-clone-iaj6.onrender.com'
+
+
 const config = {
     headers:{
         "Content-Type":"application/json",
@@ -15,7 +19,7 @@ const getListAction = ( type = '', genre = ''  )=> async( dispatch )=>{
             type:GET_LIST_REQUEST
         }) 
 
-        const  { data } = await axios.get(`http://localhost:5000/getList?type=${type ? type :''}&genre=${genre ? genre : ''}`    
+        const  { data } = await axios.get(`${mainserver}/getList?type=${type ? type :''}&genre=${genre ? genre : ''}`    
         ,config)
 
         dispatch({
@@ -35,7 +39,7 @@ export const getAllListAction = ( type = '', genre = ''  )=> async( dispatch )=>
             type:GET_ALL_LIST_REQUEST
         }) 
 
-        const  { data } = await axios.get(`http://localhost:5000/getList?type=${type ? type :''}&genre=${genre ? genre : ''}`    
+        const  { data } = await axios.get(`${mainserver}/getList?type=${type ? type :''}&genre=${genre ? genre : ''}`    
         ,config)
 
         dispatch({
@@ -58,7 +62,7 @@ export const createListAction = (content , id , title='My List', type='MyList' ,
             type: CREATE_LIST_REQUEST
         }) 
 
-        const  { data } = await axios.put(`http://localhost:5000/CreateandUpdateMyList` , 
+        const  { data } = await axios.put(`${mainserver}/CreateandUpdateMyList` , 
         {title, type , genre, content , id}, 
         config)
 
@@ -80,7 +84,7 @@ export const RemoveFromListAction = (content , id )=> async( dispatch )=>{
             type: REMOVE_FROM_LIST_REQUEST
         }) 
         
-        const  { data } = await axios.put(`http://localhost:5000/deleteElementMyList` , 
+        const  { data } = await axios.put(`${mainserver}/deleteElementMyList` , 
         {content , id}, 
         config)
 
