@@ -14,6 +14,9 @@ import axios from 'axios';
 
 const TvShows = () => {
 
+  const localserver = 'http://localhost:5000'
+  const mainserver = 'https://netflix-clone-iaj6.onrender.com'
+
     const { isAuthenticated, loading } = useSelector((state) => state.User)
     const { list , loading:listloading } = useSelector((state)=>state.List)
   const { loading:MyListLoading ,success } = useSelector((state) => state.MyList)
@@ -79,7 +82,7 @@ const TvShows = () => {
         const filtered = await Promise.all(
           Homelistitem.map(async (item) => {
             const movieDetailsPromises = item.content.map(async (movieId) => {
-              const {data}= await axios.get(`http://localhost:5000/getMovie/${movieId}`,
+              const {data}= await axios.get(`${mainserver}/getMovie/${movieId}`,
             config);
               const movieDetails = data.movie
               
