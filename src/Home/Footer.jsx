@@ -8,13 +8,13 @@ const Footer = () => {
             <div>
                 <div
                 className='social-links'>
-                    <a href="#"><img 
+                    <a href="https://twitter.com/piyushsainii"><img 
                     className='footer-link-image'
                     src="./twitter.png" alt="" /> </a>
-                    <a href="#"><img 
+                    <a href="https://github.com/piyushhsainii"><img 
                     className='footer-link-image'
                     src="./github.png" alt="" /> </a>
-                    <a href="#"><img  
+                    <a href="https://www.linkedin.com/in/piyush-saini-b860ab1bb/"><img  
                     className='footer-link-image'
                     src="./linkedin-logo.png" alt="" /></a>
                   
