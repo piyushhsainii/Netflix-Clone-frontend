@@ -81,7 +81,7 @@ const addtoListhandler = (event)=>{
     if(id){
       const getMovieDetails = async()=>{
 
-        const  { data } = await axios.get(`http://localhost:5000/getMovie/${id}`,
+        const  { data } = await axios.get(`${mainserver}/getMovie/${id}`,
         config)
         setmovieDetails(data)
       }
