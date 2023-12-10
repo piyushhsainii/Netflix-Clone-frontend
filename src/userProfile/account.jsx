@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import Loader from '../loader/loader';
+import Loader from '../loader/Loader';
 import '../Home/mylist.css'
 import { LoadUser, updateUser } from '../actions/userAction';
 import toast from 'react-hot-toast'
