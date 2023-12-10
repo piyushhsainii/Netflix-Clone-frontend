@@ -2,6 +2,9 @@ import React from 'react'
 import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNOUT_USER_REQUEST, SIGNOUT_USER_RESET, SIGNOUT_USER_SUCCESS, SIGNUP_FAIL, SIGNUP_REQUEST, SIGNUP_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS }  from '../constants/user'
 import axios from 'axios'
 
+const localserver = 'http://localhost:5000'
+const mainserver = 'https://netflix-clone-smoky-one.vercel.app/'
+
 const config = {
     headers:{
         "Content-Type":"application/json",
@@ -15,7 +18,7 @@ export const userAction = (email , password ) => async(dispatch) => {
             type:LOGIN_REQUEST
         })
 
-        const  { data } = await axios.post('http://localhost:5000/login',
+        const  { data } = await axios.post(`${mainserver}/login`,
         {email,password},
         config
         )
@@ -45,7 +48,7 @@ export const LoadUser = () => async(dispatch) => {
             type:LOAD_USER_REQUEST
         })
 
-        const  { data } = await axios.get('http://localhost:5000/getMyDetails',
+        const  { data } = await axios.get(`${mainserver}/getMyDetails`,
         config
         )
         dispatch({
@@ -75,7 +78,7 @@ export const registerUser = (name , email , password)=> async(dispatch)=>{
             type:SIGNUP_REQUEST
         })
 
-        const { data } = await axios.post('http://localhost:5000/register',
+        const { data } = await axios.post(`${mainserver}/register`,
         {name ,email,password},
         config
         )
@@ -97,7 +100,7 @@ export const signOutUser = ()=> async(dispatch)=>{
             type:SIGNOUT_USER_REQUEST
         })
 
-        const { data } = await axios.get('http://localhost:5000/logout',
+        const { data } = await axios.get(`${mainserver}/logout`,
         config
         )
         dispatch({ 
@@ -118,7 +121,7 @@ export const updateUser = ({name, email})=> async(dispatch)=>{
             type:UPDATE_USER_REQUEST
         })
 
-        const { data } = await axios.put('http://localhost:5000/updateUser',
+        const { data } = await axios.put(`${mainserver}/updateUser`,
         {name, email},
         config
         )
