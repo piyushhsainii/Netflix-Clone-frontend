@@ -65,11 +65,12 @@ const addtoListhandler = (event)=>{
     ) 
     }
   }
-  // console.log(mylistitem)
+  const localserver = 'http://localhost:5000'
+  const mainserver = 'https://netflix-clone-iaj6.onrender.com'
   useEffect(()=>{
     const getmovie = async()=>{
 
-      const  { data } = await axios.get(`http://localhost:5000/getMovie/${item}`    
+      const  { data } = await axios.get(`${mainserver}/getMovie/${item}`    
       ,config)
       setmovie(data)
     }
@@ -78,7 +79,7 @@ const addtoListhandler = (event)=>{
     if(id){
       const getMovieDetails = async()=>{
 
-        const  { data } = await axios.get(`http://localhost:5000/getMovie/${id}`,
+        const  { data } = await axios.get(`${mainserver}/getMovie/${id}`,
         config)
         setmovieDetails(data)
       }
